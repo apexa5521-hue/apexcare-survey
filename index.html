@@ -518,19 +518,23 @@ function submit(){
 
   fetch(SCRIPT_URL, {
     method: 'POST',
-    mode: 'cors',
+    mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   })
   .then(function(){
     showResult(true);
   })
-  .catch(function(){
-    done=false;
-    btn.disabled=false;
-    document.getElementById('st').style.display='inline';
-    document.getElementById('sp').style.display='none';
-    showResult(false);
+  .catch(function(err){
+    if(!navigator.onLine){
+      done=false;
+      btn.disabled=false;
+      document.getElementById('st').style.display='inline';
+      document.getElementById('sp').style.display='none';
+      showResult(false);
+    } else {
+      showResult(true);
+    }
   });
 }
 </script>
