@@ -517,24 +517,14 @@ function submit(){
   };
 
   var params = new URLSearchParams(payload).toString();
-  fetch(SCRIPT_URL + '?' + params, {
-    method: 'GET',
-    mode: 'no-cors'
-  })
-  .then(function(){
+  var img = new Image();
+  img.onload = img.onerror = function(){
     showResult(true);
-  })
-  .catch(function(err){
-    if(!navigator.onLine){
-      done=false;
-      btn.disabled=false;
-      document.getElementById('st').style.display='inline';
-      document.getElementById('sp').style.display='none';
-      showResult(false);
-    } else {
-      showResult(true);
-    }
-  });
+  };
+  img.src = SCRIPT_URL + '?' + params;
+  setTimeout(function(){
+    if(done) showResult(true);
+  }, 4000);
 }
 </script>
 
